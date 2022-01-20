@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "resolveJsonModule": true,
+    "moduleResolution": "Node",
+    "allowJs": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "alwaysStrict": true,
+    "target": "ES6"
+  }
+}
