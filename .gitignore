@@ -4,3 +4,7 @@
 # Ignore artifacts
 /dist/
 /out/
+
+# Logs
+/*.tar.gz
+/*.log
