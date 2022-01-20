@@ -1,0 +1,6 @@
+# Ignore node dependencies
+/node_modules/
+
+# Ignore artifacts
+/dist/
+/out/
