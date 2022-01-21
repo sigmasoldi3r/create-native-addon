@@ -9,7 +9,11 @@ import Logger from './Logger'
 export interface ProjectOptions {
   name: string
   description: string
+  private?: boolean
+  license?: string
 }
+
+export type SkipList = { [K in keyof ProjectOptions]?: true }
 
 /**
  * This service is in charge of selecting the appropriate
@@ -33,22 +37,35 @@ export default class OptionsProvider {
    * Starts collecting the options of the project.
    */
   async acquire(): Promise<ProjectOptions> {
-    const result = {
+    const result: ProjectOptions = {
       name: 'my-native-addon',
       description: '',
     }
-    for (const [key, value] of this.flags) {
-      if (value.isPresent()) {
-        result[key] = value.get()
-      }
-    }
+    const skip: SkipList = {}
+    this.flags.name.ifPresent(value => {
+      result.name = value
+      skip.name = true
+    })
+    this.flags.description.ifPresent(value => {
+      result.description = value
+      skip.description = true
+    })
+    this.flags.isPrivate.ifPresent(value => {
+      result.private = value
+      skip.private = true
+    })
+    this.flags.license.ifPresent(value => {
+      result.license = value
+      skip.license = true
+    })
     if (!process.stdin.isTTY) {
       this.log.info(`No TTY found for this session, input prompt is disabled.`)
-    } else if (this.flags.promptDisabled.getOr(false)) {
-      this.log.info(`Prompt disable flag received, input prompt is disabled.`)
+    } else if (this.flags.yesToAll.getOr(false)) {
+      this.log.info(`Yes-to-all flag received, input prompt is disabled.`)
     } else {
       this.log.info(`Interactive prompt is enabled!`)
-      await this.reader.collect(result)
+      const output = await this.reader.collect(skip)
+      return { ...result, ...output }
     }
     return result
   }

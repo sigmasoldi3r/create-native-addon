@@ -2,7 +2,7 @@ import { prompt } from 'enquirer'
 import Container, { Inject, Service } from 'typedi'
 import FlagReader, { Flags } from './FlagReader'
 import Logger from './Logger'
-import { ProjectOptions } from './OptionsProvider'
+import { ProjectOptions, SkipList } from './OptionsProvider'
 
 export const PROMPTS = [
   {
@@ -44,17 +44,15 @@ export default class InteractiveReader {
   /**
    * Starts collecting project information.
    */
-  async collect(result: ProjectOptions) {
+  async collect(skipList: SkipList = {}) {
     const collected = await prompt(
-      PROMPTS.filter(prompt => {
-        const present = this.flags[prompt.name].isPresent()
-        this.log.debug(`Collecting ${prompt.name}, is present? `, present)
-        return !present
-      })
+      PROMPTS.filter(prompt => !(prompt.name in skipList))
     )
+    const result: Partial<ProjectOptions> = {}
     for (const key in collected) {
       result[key as keyof typeof result] =
         collected[key as keyof typeof collected]
     }
+    return result
   }
 }
