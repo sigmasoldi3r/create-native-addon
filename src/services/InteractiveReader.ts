@@ -1,5 +1,29 @@
-import { Inject, Service } from 'typedi'
-import FlagReader from './FlagReader'
+import { prompt } from 'enquirer'
+import Container, { Inject, Service } from 'typedi'
+import FlagReader, { Flags } from './FlagReader'
+import Logger from './Logger'
+import { ProjectOptions } from './OptionsProvider'
+
+export const PROMPTS = [
+  {
+    name: 'name',
+    message: 'Name of the project:',
+    default: 'my-native-addon',
+    type: 'input',
+  },
+  {
+    name: 'description',
+    message: 'A brief description:',
+    default: '',
+    type: 'input',
+  },
+] as {
+  name: Flags
+  message: string
+  default?: string
+  required?: boolean
+  type: string
+}[]
 
 /**
  * Asks the user via interactive prompts for the project
@@ -15,12 +39,22 @@ import FlagReader from './FlagReader'
 export default class InteractiveReader {
   constructor(@Inject() private readonly flags: FlagReader) {}
 
+  readonly log = Container.get(Logger).using(InteractiveReader)
+
   /**
    * Starts collecting project information.
    */
-  async collect() {
-    if (this.flags.promptDisabled.getOr(false)) {
-      return
+  async collect(result: ProjectOptions) {
+    const collected = await prompt(
+      PROMPTS.filter(prompt => {
+        const present = this.flags[prompt.name].isPresent()
+        this.log.debug(`Collecting ${prompt.name}, is present? `, present)
+        return !present
+      })
+    )
+    for (const key in collected) {
+      result[key as keyof typeof result] =
+        collected[key as keyof typeof collected]
     }
   }
 }

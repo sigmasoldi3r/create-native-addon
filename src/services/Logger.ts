@@ -19,6 +19,26 @@ export enum LogLevel {
   OFF,
 }
 
+/**
+ * A map of log levels by name.
+ */
+export const LogLevels = {
+  ALL: LogLevel.ALL,
+  TRACE: LogLevel.TRACE,
+  DEBUG: LogLevel.DEBUG,
+  INFO: LogLevel.INFO,
+  FINE: LogLevel.FINE,
+  WARN: LogLevel.WARN,
+  ERROR: LogLevel.ERROR,
+  FATAL: LogLevel.FATAL,
+  OFF: LogLevel.OFF,
+} as const
+
+/**
+ * Log level name types.
+ */
+export type LogLevelName = keyof typeof LogLevels
+
 export interface AbstractLogger {
   trace<T extends any[]>(...args: T): this
   debug<T extends any[]>(...args: T): this
@@ -78,7 +98,7 @@ export default class Logger {
    * Creates a bound local logger which can be used per
    * class in order to have a finer source of information.
    */
-  using(classObject: { new (): any } | string) {
+  using(classObject: { name: string } | string) {
     if (typeof classObject === 'string') {
       return new LocalLogger(this, classObject)
     }
