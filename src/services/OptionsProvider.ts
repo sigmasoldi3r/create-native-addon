@@ -29,6 +29,9 @@ export default class OptionsProvider {
 
   private readonly log = Container.get(Logger).using(OptionsProvider)
 
+  /**
+   * Starts collecting the options of the project.
+   */
   async acquire(): Promise<ProjectOptions> {
     const result = {
       name: 'my-native-addon',
@@ -44,6 +47,7 @@ export default class OptionsProvider {
     } else if (this.flags.promptDisabled.getOr(false)) {
       this.log.info(`Prompt disable flag received, input prompt is disabled.`)
     } else {
+      this.log.info(`Interactive prompt is enabled!`)
       await this.reader.collect(result)
     }
     return result
