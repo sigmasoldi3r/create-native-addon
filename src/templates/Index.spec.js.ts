@@ -3,7 +3,8 @@ export interface IndexSpecJsParams {
 }
 
 export default function IndexSpecJs({ namespace }: IndexSpecJsParams) {
-  return `const { add } = require('./build/Release/${namespace}.node')
+  return `const { expect } = require('chai')
+const { add } = require('./build/Release/${namespace}.node')
 
 describe('Native function invocation', () => {
   it('Should return the sum result', () => {
