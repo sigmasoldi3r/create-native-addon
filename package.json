@@ -1,7 +1,13 @@
 {
   "name": "create-native-addon",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "main": "dist/src/index.js",
+  "bin": {
+    "create-native-addon": "dist/src/index.js"
+  },
+  "files": [
+    "dist/src/**/*"
+  ],
   "license": "MIT",
   "engines": {
     "node": "^14.14"
@@ -25,6 +31,7 @@
     "typedi": "^0.10.0"
   },
   "scripts": {
-    "start": "ts-node src/Main.ts"
+    "start": "ts-node src/Main.ts",
+    "build": "tsc"
   }
 }

@@ -1,0 +1,17 @@
+# Ignore node dependencies
+/node_modules/
+
+# Ignore artifacts and sources
+/src/
+/out/
+
+# Logs
+/*.tar.gz
+/*.log
+
+# Ignore other configuration
+.gitignore
+.git
+readme.md
+tsconfig.json
+yarn.lock

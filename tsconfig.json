@@ -6,10 +6,15 @@
     "module": "CommonJS",
     "resolveJsonModule": true,
     "moduleResolution": "Node",
+    "sourceMap": true,
+    "declaration": false,
     "allowJs": true,
     "noImplicitAny": true,
     "strictFunctionTypes": true,
     "alwaysStrict": true,
-    "target": "ES6"
-  }
+    "target": "ES6",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

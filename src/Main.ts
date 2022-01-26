@@ -27,6 +27,7 @@ export default class Main {
    * Entry point.
    */
   static async main(args: string[]) {
+    this.log.warn('This build is in alpha stage.')
     this.log.debug(`Using ${args.length} arguments from CLI`)
     this.log.info(`Application version ${this.info.version}`)
     const projectData = await this.projectData.acquire()
