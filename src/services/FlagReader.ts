@@ -1,6 +1,6 @@
 import { program } from 'commander'
 import Container, { Inject, Service } from 'typedi'
-import Option, { none, some } from '../infrastructure/Option'
+import { option, none, some } from '@octantis/option'
 import Logger, { LogLevel, LogLevelName, LogLevels } from './Logger'
 import ProjectInfo from './ProjectInfo'
 
@@ -52,7 +52,7 @@ export default class FlagReader {
       this.logLevel = some(targetLevel)
     }
     const logger = Container.get(Logger)
-    logger.level = this.logLevel.getOr(logger.level)
+    logger.level = this.logLevel.getOrElse(logger.level)
     this.log.trace('Input options ', opts)
   }
 
@@ -67,7 +67,7 @@ export default class FlagReader {
 
   static readonly keys = ['name', 'description', 'private', 'license'] as const;
 
-  *[Symbol.iterator](): Iterator<[Flags, Option<any>]> {
+  *[Symbol.iterator](): Iterator<[Flags, option<any>]> {
     yield ['name', this.name]
     yield ['description', this.description]
     yield ['private', this.isPrivate]

@@ -42,25 +42,25 @@ export default class OptionsProvider {
       description: '',
     }
     const skip: SkipList = {}
-    this.flags.name.ifPresent(value => {
+    this.flags.name.forEach(value => {
       result.name = value
       skip.name = true
     })
-    this.flags.description.ifPresent(value => {
+    this.flags.description.forEach(value => {
       result.description = value
       skip.description = true
     })
-    this.flags.isPrivate.ifPresent(value => {
+    this.flags.isPrivate.forEach(value => {
       result.private = value
       skip.private = true
     })
-    this.flags.license.ifPresent(value => {
+    this.flags.license.forEach(value => {
       result.license = value
       skip.license = true
     })
     if (!process.stdin.isTTY) {
       this.log.info(`No TTY found for this session, input prompt is disabled.`)
-    } else if (this.flags.yesToAll.getOr(false)) {
+    } else if (this.flags.yesToAll.getOrElse(false)) {
       this.log.info(`Yes-to-all flag received, input prompt is disabled.`)
     } else {
       this.log.info(`Interactive prompt is enabled!`)

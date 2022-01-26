@@ -2,7 +2,10 @@ import { readFileSync, writeFileSync } from 'fs'
 import mkdirp from 'mkdirp'
 import path from 'path'
 import { Inject, Service } from 'typedi'
-import JsonFile, { BoundJsonFile } from './JsonFile'
+import FileSerializer from '../infrastructure/FileSerializer'
+import FileSerializerProvider from './FileSerializerProvider'
+import '../infrastructure/CsonSerializer'
+import '../infrastructure/JsonSerializer'
 
 /**
  * A file manager that is bound to a root file.
@@ -10,7 +13,8 @@ import JsonFile, { BoundJsonFile } from './JsonFile'
 export class BoundFileManager {
   constructor(
     private readonly root: string,
-    private readonly jsonWriter: JsonFile
+    private readonly jsonWriter: FileSerializer,
+    private readonly csonWriter: FileSerializer
   ) {}
 
   dir(dir: string) {
@@ -30,6 +34,12 @@ export class BoundFileManager {
       this.jsonWriter.write(path.join(this.root, to), object),
     read: (from: string) => this.jsonWriter.read(path.join(this.root, from)),
   }
+
+  cson = {
+    write: (to: string, object: any) =>
+      this.csonWriter.write(path.join(this.root, to), object),
+    read: (from: string) => this.csonWriter.read(path.join(this.root, from)),
+  }
 }
 
 /**
@@ -37,9 +47,14 @@ export class BoundFileManager {
  */
 @Service()
 export default class FileManager {
-  constructor(@Inject() private readonly json: JsonFile) {}
+  constructor(@Inject() private readonly provider: FileSerializerProvider) {
+    this.json = provider.getFileSerializer('json').get()
+    this.cson = provider.getFileSerializer('cson').get()
+  }
+  readonly json: FileSerializer
+  readonly cson: FileSerializer
 
   bound(root: string) {
-    return new BoundFileManager(root, this.json)
+    return new BoundFileManager(root, this.json, this.cson)
   }
 }

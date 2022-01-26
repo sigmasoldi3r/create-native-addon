@@ -1,24 +1,16 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { Service } from 'typedi'
 
-export interface JsonOptions {
-  space?: number
-  replacer?: (this: any, key: string, value: any) => any
-}
-
-export const DEFAULT_JSON_OPTIONS: JsonOptions = {
-  space: 2,
-  replacer: null,
-}
-
-export class BoundJsonFile {
+/**
+ * A file writer that is locally bound to a file path.
+ */
+export class BoundFileWriter<A extends AbstractSerializer> {
   constructor(
-    private readonly service: JsonFile,
+    private readonly serializer: FileSerializer<A>,
     private readonly file: string
   ) {}
 
-  update(mutator: (input: any) => void, options?: JsonOptions) {
-    return this.service.update(this.file, mutator, options)
+  update(mutator: (input: any) => void) {
+    return this.serializer.update(this.file, mutator)
   }
 
   /**
@@ -50,36 +42,45 @@ export class BoundJsonFile {
 }
 
 /**
- * JSON file marshalling and unmarshalling service.
+ * Abstract serialization interface.
  */
-@Service()
-export default class JsonFile {
+export interface AbstractSerializer {
+  decode<A = {}>(data: string | Buffer): A
+  encode<A = {}>(data: A): string | Buffer
+}
+
+/**
+ * File encoding/decoding abstract interface.
+ */
+export default class FileSerializer<
+  A extends AbstractSerializer = AbstractSerializer
+> {
+  constructor(private readonly serializer: A) {}
+
   /**
    * Reads the JSON file.
    */
   read(from: string) {
-    const data = readFileSync(from)
-    return JSON.parse(data.toString())
+    return this.serializer.decode(readFileSync(from))
   }
 
   /**
    * Writes the object as a JSON file.
    */
-  write(to: string, object: any, options = DEFAULT_JSON_OPTIONS) {
-    const plain = JSON.stringify(object, options.replacer, options.space)
-    writeFileSync(to, plain)
+  write(to: string, object: any) {
+    writeFileSync(to, this.serializer.encode(object))
   }
 
   /**
    * Updates the JSON file, applying the changes.
    */
-  update(source: string, mutator: (input: any) => void, options?: JsonOptions) {
+  update(source: string, mutator: (input: any) => void) {
     const input = this.read(source)
     mutator(input)
-    this.write(source, input, options)
+    this.write(source, input)
   }
 
   bound(to: string) {
-    return new BoundJsonFile(this, to)
+    return new BoundFileWriter<A>(this, to)
   }
 }

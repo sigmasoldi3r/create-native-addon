@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { Writable } from 'stream'
 import { Service } from 'typedi'
 import { inspect } from 'util'
-import { some } from '../infrastructure/Option'
+import { some } from '@octantis/option'
 
 /**
  * Designates log levels.
@@ -122,7 +122,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.TRACE) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.trace.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -151,7 +151,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.DEBUG) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.debug.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -180,7 +180,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.INFO) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.info.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -209,7 +209,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.FINE) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.fine.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -238,7 +238,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.WARN) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.warn.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -267,7 +267,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.ERROR) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.error.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(
@@ -296,7 +296,7 @@ export class LocalLogger implements AbstractLogger {
     if (this.logger.level > LogLevel.FATAL) {
       return // Disable logging if the level is below!
     }
-    if (this.logger.dateFormatter.isPresent()) {
+    if (this.logger.dateFormatter.isDefined()) {
       this.logger.output.fatal.forEach(sink =>
         sink.write(
           chalk`[{${this.logger.dateColor} ${this.logger.dateFormatter.get()(

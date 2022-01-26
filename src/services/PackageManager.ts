@@ -4,9 +4,9 @@ import EnvInfoProvider from './EnvInfoProvider'
 import YarnProvider from './YarnProvider'
 import mkdirp from 'mkdirp'
 import NameSanitizer from './NameSanitizer'
-import JsonFile from './JsonFile'
 import path from 'path'
 import { ExecOptions, execSync } from 'child_process'
+import FileSerializerProvider from './FileSerializerProvider'
 
 /**
  * Initialized package manager.
@@ -17,9 +17,10 @@ export class InitPackageManager {
     readonly root: string
   ) {}
 
-  private readonly json = Container.get(JsonFile).bound(
-    path.join(this.root, 'package.json')
-  )
+  private readonly json = Container.get(FileSerializerProvider)
+    .getFileSerializer('json')
+    .get()
+    .bound(path.join(this.root, 'package.json'))
 
   set private(is: boolean) {
     this.json.set('private', is)

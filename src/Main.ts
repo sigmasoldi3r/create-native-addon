@@ -1,9 +1,7 @@
-import path from 'path'
 import 'reflect-metadata'
 import Entry from 'ts-entry-point'
 import Container from 'typedi'
 import FileManager from './services/FileManager'
-import JsonFile from './services/JsonFile'
 import Logger from './services/Logger'
 import OptionsProvider from './services/OptionsProvider'
 import PackageManager from './services/PackageManager'
@@ -12,6 +10,7 @@ import AddonCpp from './templates/Addon.cpp'
 import AddonHpp from './templates/Addon.hpp'
 import IndexJs from './templates/Index.js'
 import IndexSpecJs from './templates/Index.spec.js'
+import FileSerializerProvider from './services/FileSerializerProvider'
 
 /**
  * Application entry point.
@@ -22,7 +21,7 @@ export default class Main {
   static info = Container.get(ProjectInfo)
   static projectData = Container.get(OptionsProvider)
   static pkg = Container.get(PackageManager)
-  static json = Container.get(JsonFile)
+  static json = Container.get(FileSerializerProvider).get('json').get()
 
   /**
    * Entry point.
