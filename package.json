@@ -1,9 +1,9 @@
 {
   "name": "create-native-addon",
   "version": "0.0.1",
-  "main": "dist/src/index.js",
+  "main": "dist/src/Main.js",
   "bin": {
-    "create-native-addon": "dist/src/index.js"
+    "create-native-addon": "dist/src/Main.js"
   },
   "files": [
     "dist/src/**/*"
