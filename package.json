@@ -13,8 +13,10 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@octantis/option": "^1.0.3",
     "chalk": "4.1.2",
     "commander": "^8.3.0",
+    "cson": "^7.20.0",
     "enquirer": "^2.3.6",
     "mkdirp": "^1.0.4",
     "reflect-metadata": "^0.1.13",

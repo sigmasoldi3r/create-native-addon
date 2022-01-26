@@ -14,6 +14,11 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
+"@octantis/option@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@octantis/option/-/option-1.0.3.tgz#9a6123bc1ee1a2fe50ad082b16d4a97b6696890b"
+  integrity sha512-WpdCKEqTDMjPjgguS3kRQWjkyFUusSPEgrVaesPAQpawu8I8tme6ofvIHpMAchyR47D6CsBUidJJZ+ge38I1aA==
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.8.tgz#c1e4e80d6f964fbecb3359c43bd48b40f7cadad9"
@@ -81,6 +86,11 @@ chalk@4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+coffeescript@1.12.7:
+  version "1.12.7"
+  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-1.12.7.tgz#e57ee4c4867cf7f606bfc4a0f2d550c0981ddd27"
+  integrity sha512-pLXHFxQMPklVoEekowk8b3erNynC+DVJzChxS/LCBBgR6/8AJkHivkm//zbowcfc7BTCAjryuhx6gPqPRfsFoA==
+
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-2.0.1.tgz#72d3a68d598c9bdb3af2ad1e84f21d896abd4de3"
@@ -103,10 +113,34 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
+cson-parser@^4.0.5:
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/cson-parser/-/cson-parser-4.0.9.tgz#eef0cf77edd057f97861ef800300c8239224eedb"
+  integrity sha512-I79SAcCYquWnEfXYj8hBqOOWKj6eH6zX1hhX3yqmS4K3bYp7jME3UFpHPzu3rUew0oyfc0s8T6IlWGXRAheHag==
+  dependencies:
+    coffeescript "1.12.7"
+
+cson@^7.20.0:
+  version "7.20.0"
+  resolved "https://registry.yarnpkg.com/cson/-/cson-7.20.0.tgz#638f7ef2bd108151484d6f6613ae2717b4156226"
+  integrity sha512-K7g/86vC77mJqi6PRFhd3p8U/y0R6SsCeTJb5RpOAaQdApHxCoK5JwfZ8WeJjpOZ6lyyi8tNvh3UuC184H3GWg==
+  dependencies:
+    cson-parser "^4.0.5"
+    extract-opts "^4.3.0"
+    requirefresh "^4.12.0"
+    safefs "^6.12.0"
+
 diff@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+
+eachr@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/eachr/-/eachr-4.5.0.tgz#495eb3aab6a41811da1e04e510424df32075cf04"
+  integrity sha512-9I664RWp6p8jvcHZIwo7bWaiSaUmA1wNSLKwNZEiaYjqiTARq3cGjyRiIunsopZv4QMmX3T5Hs17QoPAzdYxfg==
+  dependencies:
+    typechecker "^6.2.0"
 
 enquirer@^2.3.6:
   version "2.3.6"
@@ -114,6 +148,19 @@ enquirer@^2.3.6:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
+
+extract-opts@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/extract-opts/-/extract-opts-4.3.0.tgz#ee0a797249abb77e449bdaaba66ebeff4775505e"
+  integrity sha512-Dmssi1tgKJkQsVmbP7TgW/kbdc42SAsNf6h9ClweP+dS7O24YYMTXsNwPelxhx0LF15npiWwY5ahKtyQiNgxWA==
+  dependencies:
+    eachr "^4.5.0"
+    typechecker "^6.2.0"
+
+graceful-fs@^4.2.6:
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
+  integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
 
 has-flag@^4.0.0:
   version "4.0.0"
@@ -134,6 +181,18 @@ reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
   integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+
+requirefresh@^4.12.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/requirefresh/-/requirefresh-4.13.0.tgz#bd4edaf45bf0194cbccecbc444794d1012604f21"
+  integrity sha512-APrzWWxqnwE2Bz3ysFepAU0Dc0aYjn8jsDLFIegedn+KVCS9LykAclkf+6YaJXk3ON9l6QAm04rN+bEA89cGIg==
+
+safefs@^6.12.0:
+  version "6.16.0"
+  resolved "https://registry.yarnpkg.com/safefs/-/safefs-6.16.0.tgz#e1901c0ea1e8926289bd8d5383a65ce21bb44d2f"
+  integrity sha512-IUIN5h+r2acNVkbsM5VoBUsRnaSFwQFZnzyvQsiLlgFsncLi7rrtmM4FsEgwv+xDTJzsrp79rd+/GJu2zWcR9w==
+  dependencies:
+    graceful-fs "^4.2.6"
 
 supports-color@^7.1.0:
   version "7.2.0"
@@ -164,6 +223,11 @@ ts-node@^10.4.0:
     diff "^4.0.1"
     make-error "^1.1.1"
     yn "3.1.1"
+
+typechecker@^6.2.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/typechecker/-/typechecker-6.4.0.tgz#c087dc744c5a0f17524d58a17eb31a9660ab7324"
+  integrity sha512-EbOu+9szY13mhl0EsvLXnR+pTCa3gTHQQPLdce72ujcC9fRHXlVFBNXtHeRhgzLxLlKUh4zA9C0tezLDgshf+A==
 
 typedi@^0.10.0:
   version "0.10.0"

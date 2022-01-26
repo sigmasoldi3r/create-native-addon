@@ -6,6 +6,7 @@ import mkdirp from 'mkdirp'
 import NameSanitizer from './NameSanitizer'
 import JsonFile from './JsonFile'
 import path from 'path'
+import { ExecOptions, execSync } from 'child_process'
 
 /**
  * Initialized package manager.
@@ -30,6 +31,28 @@ export class InitPackageManager {
 
   set description(value: string) {
     this.json.set('description', value)
+  }
+
+  async install(what: string, development?: boolean) {
+    await this.manager.provider.install(what, this.root, development)
+  }
+
+  /**
+   * Runs the command in the package folder.
+   */
+  run(command: string, options?: ExecOptions) {
+    return execSync(command, {
+      cwd: this.root,
+      ...options,
+    })
+  }
+
+  addScript(name: string, command: string) {
+    this.json.set(`scripts.${name}`, command)
+  }
+
+  async runScript(script: string) {
+    await this.manager.provider.run(script, this.root)
   }
 }
 

@@ -8,33 +8,36 @@ export interface AddonCppParams {
  * Template for addon root file.
  */
 export default function AddonCpp({ namespace }: AddonCppParams) {
-  return cpp`#include <node_api.h>
+  return cpp`#include "addon.hpp"
 
-namespace ${namespace} {
+// Example of native function
+Napi::Value Add(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
 
-napi_value Method(napi_env env, napi_callback_info args) {
-  napi_value greeting;
-  napi_status status;
+  if (info.Length() < 2) {
+    Napi::TypeError::New(env, "Wrong number of arguments")
+        .ThrowAsJavaScriptException();
+    return env.Null();
+  }
 
-  status = napi_create_string_utf8(env, "world", NAPI_AUTO_LENGTH, &greeting);
-  if (status != napi_ok) return nullptr;
-  return greeting;
+  if (!info[0].IsNumber() || !info[1].IsNumber()) {
+    Napi::TypeError::New(env, "Wrong arguments").ThrowAsJavaScriptException();
+    return env.Null();
+  }
+
+  double arg0 = info[0].As<Napi::Number>().DoubleValue();
+  double arg1 = info[1].As<Napi::Number>().DoubleValue();
+  Napi::Number num = Napi::Number::New(env, arg0 + arg1);
+
+  return num;
 }
 
-napi_value init(napi_env env, napi_value exports) {
-  napi_status status;
-  napi_value fn;
-
-  status = napi_create_function(env, nullptr, 0, Method, nullptr, &fn);
-  if (status != napi_ok) return nullptr;
-
-  status = napi_set_named_property(env, exports, "hello", fn);
-  if (status != napi_ok) return nullptr;
+// Addon initialization function
+Napi::Object ${namespace}_Init(Napi::Env env, Napi::Object exports) {
+  exports.Set(Napi::String::New(env, "add"), Napi::Function::New(env, Add));
   return exports;
 }
 
-NAPI_MODULE(NODE_GYP_MODULE_NAME, init)
-
-}  // namespace ${namespace}
+NODE_API_MODULE(${namespace}, ${namespace}_Init)  
 `
 }

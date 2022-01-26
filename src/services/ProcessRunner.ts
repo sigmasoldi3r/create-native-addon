@@ -4,6 +4,8 @@ import Logger from './Logger'
 
 /**
  * Wrapper around process spawning.
+ * @deprecated Processes can be executed synchronously by
+ * a package manager instance, having the CWD already set.
  */
 @Service()
 export default class ProcessRunner {
