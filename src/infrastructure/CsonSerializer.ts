@@ -1,5 +1,5 @@
 import { AbstractSerializer } from './FileSerializer'
-import * as cson from 'cson'
+import cson from 'cson'
 import { Serializer } from '../services/FileSerializerProvider'
 
 @Serializer('cson')

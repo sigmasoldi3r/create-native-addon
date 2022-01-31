@@ -17,6 +17,19 @@ export const PROMPTS = [
     default: '',
     type: 'input',
   },
+  {
+    name: 'private',
+    default: true,
+    message: 'Private?',
+    type: 'confirm',
+  },
+  {
+    name: 'license',
+    default: 'MIT',
+    message: 'Select a license:',
+    type: 'select',
+    choices: ['MIT', 'None', 'Custom'],
+  },
 ] as {
   name: Flags
   message: string
