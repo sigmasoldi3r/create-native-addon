@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "^14.14"
+    "node": ">=14"
   },
   "devDependencies": {
     "@types/cson": "^7.20.1",
