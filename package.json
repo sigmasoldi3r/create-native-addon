@@ -1,6 +1,6 @@
 {
   "name": "create-native-addon",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "dist/src/Main.js",
   "bin": {
     "create-native-addon": "./cli.js"
